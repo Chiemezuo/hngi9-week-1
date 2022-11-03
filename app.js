@@ -18,6 +18,14 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
+  if (JSON.stringify(req.body) === '{}') {
+    req.body = {
+      operation_type: 'addition',
+      x: 1,
+      y: 1
+    }
+  }
+
   const { operation_type, x, y } = req.body
 
   if (isNaN(x) || isNaN(y))
