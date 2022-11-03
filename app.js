@@ -17,6 +17,36 @@ app.get('/', (req, res) => {
   })
 })
 
+app.post('/', (req, res) => {
+  const { operation_type, x, y } = req.body
+
+  if (isNaN(x) || isNaN(y))
+    return res.send({
+      error: "Stop being sneaky, put in the right parameters"
+    })
+
+  let result = ''
+
+  if (operation_type.toLowerCase() === "addition") {
+    result = +x + +y
+  }
+  else if (operation_type.toLowerCase() === "multiplication") {
+    result = +x * +y
+  }
+  else if (operation_type.toLowerCase() === "subtraction") {
+    result = +x - +y
+  }
+  else return res.send({
+    error: "Put in an operation_type of 'addition', 'multiplication', or 'subtraction' "
+  })
+
+  res.send({
+    slackUsername: 'Chiemezuo',
+    result,
+    operation_type
+  })
+})
+
 app.listen(port, () => {
   console.log("Up and running")
 })
